@@ -1,0 +1,42 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.backend
+    container_name: matrix-backend
+    privileged: true
+    user: root
+    ports:
+      - "8000:8000"
+    environment:
+      - TZ=${TZ}
+      - LATITUDE=${LATITUDE}
+      - LONGITUDE=${LONGITUDE}
+    devices:
+      - "/dev/gpiomem:/dev/gpiomem"
+      - "/dev/mem:/dev/mem"
+      - "/dev/spidev0.0:/dev/spidev0.0"
+      - "/dev/spidev0.1:/dev/spidev0.1"
+    volumes:
+      - ../backend/conf:/conf 
+      - /etc/localtime:/etc/localtime:ro  # Sync the host's timezone
+      - /etc/timezone:/etc/timezone:ro  # Sync the host's timezone
+    restart: unless-stopped
+  
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.frontend
+    container_name: matrix-frontend
+    ports:
+      - "80:80"  # Serve frontend on port 3000
+    environment:
+      - TZ=${TZ}
+      - REACT_APP_API_BASE_URL:http://backend:8000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro  # Sync the host's timezone
+      - /etc/timezone:/etc/timezone:ro  # Sync the host's timezone
+    depends_on:
+      - backend
+    restart: unless-stopped
+

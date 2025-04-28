@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+requests
+aiofiles
+RPi.GPIO
+rpi_ws281x
+Adafruit-Blinka
+adafruit-circuitpython-pixelbuf
+adafruit-circuitpython-neopixel
+adafruit-circuitpython-debouncer

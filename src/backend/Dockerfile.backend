@@ -1,0 +1,40 @@
+# Use a Raspberry Pi-compatible Python base image
+FROM python:3.9-slim-bullseye
+
+# Set environment variables to avoid Python buffering issues
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies for GPIO, rpi_ws281x, and general build tools
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    python3-dev \
+    scons \
+    git \
+    libffi-dev \
+    libjpeg-dev \
+    libopenjp2-7 \
+    zlib1g-dev \
+    libtiff5 \
+    libatlas-base-dev \
+    libegl1-mesa-dev \
+    libopenblas-dev \
+    libfreetype6-dev \
+    tree \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy your application files into the container
+COPY . .
+
+# Install Python dependencies
+RUN pip install -r requirements.txt
+
+RUN tree -L 4
+# Expose port for FastAPI
+EXPOSE 8000
+
+# Run your FastAPI app using uvicorn (no --reload in production)
+CMD ["uvicorn", "matrix_backend:app", "--host", "0.0.0.0", "--port", "8000"]
