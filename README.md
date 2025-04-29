@@ -136,7 +136,7 @@ sudo ufw status
 first configure the env file 
 
 ```bash
-cd ~/LED_Matrix/src/Docker/
+cd ~/LED_Matrix_/src/Docker/
 nano .env
 ```
 
@@ -152,7 +152,7 @@ TZ=Europe/Berlin  # Optional timezone setting
 
 start the container 
 ```bash
-cd ~/LED_Matrix/src/Docker/
+cd ~/LED_Matrix_/src/Docker/
 docker compose up -d
 ```
 
@@ -165,6 +165,6 @@ http://LED_Matrix.local
 
 stop the container 
 ```bash
-cd ~/LED_Matrix/src/Docker/
+cd ~/LED_Matrix_/src/Docker/
 docker compose down
 ```
