@@ -23,16 +23,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libegl1-mesa-dev \
     libopenblas-dev \
     libfreetype6-dev \
-    tree \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --prefer-binary -r requirements.txt
 
 # Copy your application files into the container
 COPY . .
 
-# Install Python dependencies
-RUN pip install -r requirements.txt
-
-RUN tree -L 4
 # Expose port for FastAPI
 EXPOSE 8000
 
