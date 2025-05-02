@@ -167,6 +167,8 @@ Add the following lines:
 LATITUDE=
 LONGITUDE=
 TZ=Europe/Berlin  # Optional timezone setting
+MATRIX_ROTATION=90   # set rotation to 0, 90, 180, 270
+SWAP_BUTTONS="true"  # Swaps buttons "true" or "false"
 ```
 
 
