@@ -1,9 +1,12 @@
 import asyncio
 import time
 import threading
+import os
 import board
 import digitalio
 from adafruit_debouncer import Debouncer
+
+swap_buttons = os.getenv("SWAP_BUTTONS")
 
 # BUTTON PINS
 BUTTON_INC = 23  # GPIO pin to increase index
@@ -11,12 +14,19 @@ BUTTON_DEC = 24  # GPIO pin to decrease index
 
 # Function to setup GPIO and pass callback function
 def setup_gpio(change_index):
-    inc_pin = digitalio.DigitalInOut(board.D23)
+    
+    if swap_buttons == "true":
+        inc_pin = digitalio.DigitalInOut(board.D24)
+        dec_pin = digitalio.DigitalInOut(board.D23)
+    else:
+        inc_pin = digitalio.DigitalInOut(board.D23)
+        dec_pin = digitalio.DigitalInOut(board.D24)
+    
+    
     inc_pin.direction = digitalio.Direction.INPUT
     inc_pin.pull = digitalio.Pull.UP
     inc_button = Debouncer(inc_pin)
 
-    dec_pin = digitalio.DigitalInOut(board.D24)
     dec_pin.direction = digitalio.Direction.INPUT
     dec_pin.pull = digitalio.Pull.UP
     dec_button = Debouncer(dec_pin)

@@ -13,6 +13,7 @@ services:
       - LATITUDE=${LATITUDE}
       - LONGITUDE=${LONGITUDE}
       - MATRIX_ROTATION=${MATRIX_ROTATION}
+      - SWAP_BUTTONS=${SWAP_BUTTONS}
     devices:
       - "/dev/gpiomem:/dev/gpiomem"
       - "/dev/mem:/dev/mem"

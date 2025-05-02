@@ -168,12 +168,13 @@ class LEDMatrix:
             if counter == 0:
                 # update weather
                 temperature, weather = get_weather(latitude, longitude) # Dresden coordinates
-        
-            hour, minute = get_system_time()
-            
-            self.place_clock(hour, minute, temperature, weather)
+
+            if counter == 0 or counter == 10:
+                hour, minute = get_system_time()
+                
+                self.place_clock(hour, minute, temperature, weather)
             counter += 1
-            time.sleep(10)  # Update every 30 seconds
+            time.sleep(1)
             
     def stop_clock(self):
         self.clock_active = False
@@ -182,7 +183,7 @@ class LEDMatrix:
             self.clock_thread = None
     
     def start_clock(self):
-        self.stop_clock()  # 🔁 Ensure no thread is left hanging
+        self.stop_clock()  # Ensure no thread is left hanging
         self.clock_active = True
         self.clock_thread = threading.Thread(target=self.update_clock, daemon=True)
         self.clock_thread.start()
@@ -202,7 +203,7 @@ class LEDMatrix:
             self.animation_thread = None
     
     def start_animation(self, animation_frames, frame_delay=0.1):
-        self.stop_animation()  # 🔁 Ensure no thread is left hanging
+        self.stop_animation()  # Ensure no thread is left hanging
         self.animation_active = True
         self.animation_thread = threading.Thread(
             target=self.update_animation,

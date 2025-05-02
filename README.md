@@ -2,24 +2,27 @@
 
 ![frontend](./Build_Guide/img/frontend1.png)
 
+![picture](./Build_Guide/img/Demo1.jpg)
+![picture](./Build_Guide/img/Demo2.jpg)
+
 This project allows you to control a 16x16 LED NeoPixel matrix using a Raspberry Pi Pico W2. 
 
 ## Features:
-- Control LED matrix displays through a web interface.
-- pixel art editor to create static and animated images 
-- Interact with GPIO buttons on the Raspberry Pi to control the matrix.
-- Backend API to communicate with the NeoPixel matrix.
-- Fully containerized using Docker for seamless deployment.
+- Control LED matrix displays through a web interface
+- Pixel art editor to create static and animated images
+- Interact with GPIO buttons on the Raspberry Pi to control the matrix
+- Backend API to communicate with the NeoPixel matrix
+- Fully containerized using Docker for seamless deployment
 
 
 ## Components
 - Raspberry Pi Pico W2
 - Micro SD Card 
 - 16x16 LED Matrix ( [build with BTF-LIGHTING WS2812BECO](https://www.amazon.de/dp/B088K1JH6X?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) )
-- I2C Logik Level converter 3,3 V to 5 V 
+- I2C Logic Level Converter 3.3V to 5V
 - 2 Push Buttons
 - DC Power Jack 5,5mm x 2,1mm ( [build with](https://www.amazon.de/dp/B08HGXYS4J?ref=ppx_yo2ov_dt_b_fed_asin_title) )
-- Power Suply 5V 15A ( [build with ALITOVE Netzteil 5V 15A Universal Adapter 5 Volt Netzteil 75W](https://www.amazon.de/dp/B0B49ZN1LF?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) )
+- Power Supply 5V 15A ( [build with ALITOVE Netzteil 5V 15A Universal Adapter 5 Volt Netzteil 75W](https://www.amazon.de/dp/B0B49ZN1LF?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) )
 
 ## Build Guide 
 
@@ -29,21 +32,26 @@ This project allows you to control a 16x16 LED NeoPixel matrix using a Raspberry
 ![case2](./Build_Guide/img/case2.jpeg)
 ![case3](./Build_Guide/img/case3.jpeg)
 
-the step files for the case are provided [here](./Build_Guide/step/)
+The STEP files for the case are provided [here](./Build_Guide/step/)
 
 ### Wiring 
 
-wire up alle the componets acording to the folowing diagram 
+Wire up all the components according to the following diagram:
 
 ![wiring](./Build_Guide/img/wiring.png)
 
-some LED Matrixes have a deticated power imput if availabel use it 
+Some LED matrices have a dedicated power input — if available, use it.
 
-make sure the wires are outed through the case before conecting the DC Power Jack
+Make sure the wires are routed through the case before connecting the DC power jack.
 
-### note about matrix choice 
+Tape the matrix to the case with double-sided tape and secure the buttons in place
 
-the LED matrix used in this example is functionaly a lightsrip so leds need to be adressed like an array in the following schemme 
+![picture](./Build_Guide/img/Demo4.jpg)
+![picture](./Build_Guide/img/Demo3.jpg)
+
+### Note About Matrix Choice
+
+The LED matrix used in this example functions like a light strip, so the LEDs need to be addressed as an array according to the following scheme:
 
 ```bash
 2 1 0 
@@ -51,9 +59,9 @@ the LED matrix used in this example is functionaly a lightsrip so leds need to b
 8 7 6
 ```
 
-if you want to use a difeent matrix you might need to adapt the `get_index` function in [LEDMatrix](./src/backend/LEDMatrix/LEDMatrix.py)
+If you want to use a different matrix, you might need to adapt the `get_index` function in [LEDMatrix](./src/backend/LEDMatrix/LEDMatrix.py)
 
-## Instalation guide  
+## Installation Guide
 
 ### Installing Ubuntu Server 22.04.3 LTS (64-bit) on Raspberry Pi
 
@@ -70,20 +78,20 @@ in the Advanced Options Menu
 - Password: <pw>
 - Configure a wireles LAN
 
-### conect over ssh 
+### Connect Over SSH
 
-in your comand line type 
+In your command line, type:
 
 ```bash
 ssh led@<your-ip-adress>
 ```
 
-and enter your pasword 
+Then enter your password.
 
 
 ### Install Docker 
 
-Insatll dependecies:
+Install dependencies:
 ```bash
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 ```
@@ -145,14 +153,14 @@ sudo ufw status
 
 ### Start the Container
 
-first configure the env file 
+First, configure the `.env` file:
 
 ```bash
 cd ~/LED_Matrix_/src/Docker/
 nano .env
 ```
 
-add the follwoing lines 
+Add the following lines:
 
 ```bash
 # .env file
@@ -162,22 +170,28 @@ TZ=Europe/Berlin  # Optional timezone setting
 ```
 
 
-start the container 
+Start the container:
 ```bash
 cd ~/LED_Matrix_/src/Docker/
 docker compose up -d
 ```
 
-now you can acces the application at 
+Now you can access the application at:
 
 http://LED_Matrix.local
 
 
 ### additional comands 
 
-stop the container 
+Stop the container:
 ```bash
 cd ~/LED_Matrix_/src/Docker/
 docker compose down
 ```
 
+Rebuild the container:
+```bash
+cd ~/LED_Matrix_/src/Docker/
+docker compose build
+docker compose up -d
+```
