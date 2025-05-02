@@ -13,6 +13,8 @@ latitude = os.getenv("LATITUDE")
 longitude = os.getenv("LONGITUDE")
 timezone = os.getenv("TZ")
 
+matrix_rotation = os.getenv("MATRIX_ROTATION")
+
 class LEDMatrix:
     def __init__(self, rows, cols, brightness=0.2):
         self.brightness = brightness
@@ -40,10 +42,34 @@ class LEDMatrix:
     
     def get_index(self, x, y):
         if 0 <= x < self.cols and 0 <= y < self.rows:
-            if y % 2 == 0:
-                return y * self.cols + (self.cols - x - 1)
-            else:
-                return y * self.cols + x
+            
+            if matrix_rotation == "0":            
+                if y % 2 == 0:
+                    return y * self.cols + (self.cols - x - 1)
+                else:
+                    return y * self.cols + x
+            elif matrix_rotation == "90":    # 90 degrees counter-clockwise
+                original_x = self.rows - y - 1
+                original_y = x
+                if original_y % 2 == 0:
+                    return original_y * self.cols + (self.cols - original_x - 1)
+                else:
+                    return original_y * self.cols + original_x
+            elif matrix_rotation == "180":    # 180 degrees
+                flipped_x = self.cols - 1 - x
+                flipped_y = self.rows - 1 - y
+                if flipped_y % 2 == 0:
+                    return flipped_y * self.cols + (self.cols - 1 - flipped_x)
+                else:
+                    return flipped_y * self.cols + flipped_x
+            elif matrix_rotation == "270":    # 270 degrees counter-clockwise
+                original_x = y
+                original_y = self.cols - 1 - x
+
+                if original_y % 2 == 0:
+                    return original_y * self.cols + (self.cols - 1 - original_x)
+                else:
+                    return original_y * self.cols + original_x
         return None
         
     def load_matrix(self, matrix):

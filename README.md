@@ -29,7 +29,7 @@ This project allows you to control a 16x16 LED NeoPixel matrix using a Raspberry
 ![case2](./Build_Guide/img/case2.jpeg)
 ![case3](./Build_Guide/img/case3.jpeg)
 
-the stl files for the case are provided [here](./Build_Guide/stl/)
+the step files for the case are provided [here](./Build_Guide/step/)
 
 ### Wiring 
 
@@ -40,6 +40,18 @@ wire up alle the componets acording to the folowing diagram
 some LED Matrixes have a deticated power imput if availabel use it 
 
 make sure the wires are outed through the case before conecting the DC Power Jack
+
+### note about matrix choice 
+
+the LED matrix used in this example is functionaly a lightsrip so leds need to be adressed like an array in the following schemme 
+
+```bash
+2 1 0 
+3 4 5
+8 7 6
+```
+
+if you want to use a difeent matrix you might need to adapt the `get_index` function in [LEDMatrix](./src/backend/LEDMatrix/LEDMatrix.py)
 
 ## Instalation guide  
 
@@ -168,3 +180,4 @@ stop the container
 cd ~/LED_Matrix_/src/Docker/
 docker compose down
 ```
+

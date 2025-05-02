@@ -12,6 +12,7 @@ services:
       - TZ=${TZ}
       - LATITUDE=${LATITUDE}
       - LONGITUDE=${LONGITUDE}
+      - MATRIX_ROTATION=${MATRIX_ROTATION}
     devices:
       - "/dev/gpiomem:/dev/gpiomem"
       - "/dev/mem:/dev/mem"
