@@ -169,7 +169,7 @@ class LEDMatrix:
                 # update weather
                 temperature, weather = get_weather(latitude, longitude) # Dresden coordinates
 
-            if counter == 0 or counter == 10:
+            if counter % 10 == 0:
                 hour, minute = get_system_time()
                 
                 self.place_clock(hour, minute, temperature, weather)
