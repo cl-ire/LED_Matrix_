@@ -14,6 +14,9 @@ services:
       - LONGITUDE=${LONGITUDE}
       - MATRIX_ROTATION=${MATRIX_ROTATION}
       - SWAP_BUTTONS=${SWAP_BUTTONS}
+      - BRIGHTNESS=${BRIGHTNESS}
+      - CLOCK_START_HOUR=${CLOCK_START_HOUR}
+      - CLOCK_END_HOUR=${CLOCK_END_HOUR}
     devices:
       - "/dev/gpiomem:/dev/gpiomem"
       - "/dev/mem:/dev/mem"
