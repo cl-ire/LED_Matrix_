@@ -14,9 +14,12 @@ longitude = os.getenv("LONGITUDE")
 timezone = os.getenv("TZ")
 
 matrix_rotation = os.getenv("MATRIX_ROTATION")
+brightness = float(os.getenv("BRIGHTNESS", "0.2"))
+clock_start_hour = int(os.getenv("CLOCK_START_HOUR", "7"))
+clock_end_hour = int(os.getenv("CLOCK_END_HOUR", "24"))
 
 class LEDMatrix:
-    def __init__(self, rows, cols, brightness=0.2):
+    def __init__(self, rows, cols):
         self.brightness = brightness
         self.rows = rows
         self.cols = cols
@@ -161,7 +164,14 @@ class LEDMatrix:
         counter = 0
         self.clear()
         while self.clock_active:
-                      
+
+            hour, minute = get_system_time()
+            if hour >= clock_end_hour or hour < clock_start_hour:
+                self.clear()  # Optional: turn off display at night
+                time.sleep(60)  # Sleep longer during off hours
+                counter = 0
+                continue
+            
             if counter > 120:
                 counter = 0
                 # reset couter every hour
@@ -170,8 +180,6 @@ class LEDMatrix:
                 temperature, weather = get_weather(latitude, longitude) # Dresden coordinates
 
             if counter % 10 == 0:
-                hour, minute = get_system_time()
-                
                 self.place_clock(hour, minute, temperature, weather)
             counter += 1
             time.sleep(1)

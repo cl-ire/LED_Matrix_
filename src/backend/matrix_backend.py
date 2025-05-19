@@ -39,7 +39,7 @@ except Exception as e:
     traceback.print_exc()
 
 
-led_matrix = LEDMatrix(16, 16, brightness=0.2)
+led_matrix = LEDMatrix(16, 16)
 
 
 @asynccontextmanager

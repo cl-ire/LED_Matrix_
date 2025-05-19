@@ -4,3 +4,6 @@ LONGITUDE=
 TZ=Europe/Berlin     # Optional timezone setting
 MATRIX_ROTATION=90   # set rotation to 0, 90, 180, 270
 SWAP_BUTTONS="true"  # Swaps buttons "true" or "false"
+BRIGHTNESS=0.1
+CLOCK_START_HOUR=7
+CLOCK_END_HOUR=24
