@@ -92,18 +92,18 @@ const ControlPanel = () => {
 	};
 
 	const handleDownload = () => {
-	const choice = window.prompt(
-		"What would you like to download?\n- Type 'g' for current grid\n- Type 'm' for entire matrix"
-	);
+		const choice = window.prompt(
+			"What would you like to download?\n- Type 'g' for current grid\n- Type 'm' for entire matrix"
+		);
 
-	if (choice === "g") {
-		printMatrix();
-	} else if (choice === "m") {
-		downloadEntireMatrix();
-	} else {
-		alert("Download cancelled or invalid input.");
-	}
-};
+		if (choice === "g") {
+			printMatrix();
+		} else if (choice === "m") {
+			downloadEntireMatrix();
+		} else {
+			alert("Download cancelled or invalid input.");
+		}
+	};
 
 
 	function saveGridToMatrix() {
