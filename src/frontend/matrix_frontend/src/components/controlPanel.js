@@ -79,6 +79,33 @@ const ControlPanel = () => {
 		URL.revokeObjectURL(url);
 	};
 
+	const downloadEntireMatrix = () => {
+		saveGridToMatrix();
+		const output = JSON.stringify(matrix, null, 2); // Pretty-print the matrix
+		const blob = new Blob([output], { type: "application/json" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = "entire_matrix.json";
+		a.click();
+		URL.revokeObjectURL(url);
+	};
+
+	const handleDownload = () => {
+	const choice = window.prompt(
+		"What would you like to download?\n- Type 'g' for current grid\n- Type 'm' for entire matrix"
+	);
+
+	if (choice === "g") {
+		printMatrix();
+	} else if (choice === "m") {
+		downloadEntireMatrix();
+	} else {
+		alert("Download cancelled or invalid input.");
+	}
+};
+
+
 	function saveGridToMatrix() {
 		setMatrix((prevMatrix) => {
 			const newMatrix = [...prevMatrix]; // shallow copy of matrix
@@ -256,7 +283,7 @@ const ControlPanel = () => {
 					{/* Print Matrix Button */}
 					<button
 						className="btn btn-info p-2 rounded"
-						onClick={printMatrix}
+						onClick={handleDownload}
 						style={{ width: "100%" }} // Make button stretch to the width
 					>
 						Download Matrix
