@@ -87,6 +87,9 @@ class LEDMatrix:
     
     def process_number(self, number):
         n_positiv = True
+        if number is None:
+            print("Error: Number is None")
+            return 0, 0, 0
         
         if number < 0:
             n_positiv = False
