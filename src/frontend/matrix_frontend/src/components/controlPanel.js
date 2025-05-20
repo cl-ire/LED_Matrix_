@@ -143,6 +143,42 @@ const ControlPanel = () => {
 		});
 	};
 
+	const handleFileUpload = (e) => {
+		const file = e.target.files[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+
+		reader.onload = (event) => {
+			try {
+			const importedMatrix = JSON.parse(event.target.result);
+
+			// Optionally, validate the structure of importedMatrix here
+
+			// Update local state with imported matrix
+			setMatrix(importedMatrix);
+
+			// Optionally reset gridIndex and frameIndex
+			setGridIndex(0);
+			setFrameIndex(0);
+
+			// Upload imported matrix to backend
+			uploadMatrixToBackend(importedMatrix);
+
+			alert("Matrix imported and uploaded successfully!");
+			} catch (err) {
+			alert("Failed to parse JSON file. Please select a valid matrix JSON.");
+			console.error("Error parsing JSON:", err);
+			}
+		};
+
+		reader.readAsText(file);
+
+		// Reset input so the same file can be re-uploaded if needed
+		e.target.value = null;
+		};
+
+
 	const handleDelete = () => {
 		if (matrix[gridIndex].type === "animation") {
 			const choice = window.prompt(
@@ -288,6 +324,20 @@ const ControlPanel = () => {
 					>
 						Download Matrix
 					</button>
+					<label
+						htmlFor="jsonUpload"
+						className="btn btn-info p-2 rounded"
+						style={{ cursor: "pointer", display: "block", width: "100%", marginTop: "0px" }}
+						>
+						Import Matrix JSON
+						</label>
+						<input
+						type="file"
+						id="jsonUpload"
+						accept=".json,application/json"
+						style={{ display: "none" }}
+						onChange={handleFileUpload}
+					/>
 
 					{/* Save Changes Button */}
 					<button
