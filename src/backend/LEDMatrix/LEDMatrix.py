@@ -166,6 +166,8 @@ class LEDMatrix:
     def update_clock(self):
         counter = 0
         self.clear()
+        last_temperature = 0
+        last_weather = "clear"
         while self.clock_active:
 
             hour, minute = get_system_time()
@@ -182,10 +184,12 @@ class LEDMatrix:
                 # update weather
                 try:
                     temperature, weather = get_weather(latitude, longitude) # Dresden coordinates
+                    last_temperature = temperature
+                    last_weather = weather
                 except Exception as e:
                     print(f"Error fetching weather: {e}")
-                    temperature = 0
-                    weather = "unknown"
+                    temperature = last_temperature
+                    weather = last_weather
 
             if counter % 10 == 0:
                 self.place_clock(hour, minute, temperature, weather)
