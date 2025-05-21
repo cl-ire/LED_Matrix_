@@ -180,7 +180,12 @@ class LEDMatrix:
                 # reset couter every hour
             if counter == 0:
                 # update weather
-                temperature, weather = get_weather(latitude, longitude) # Dresden coordinates
+                try:
+                    temperature, weather = get_weather(latitude, longitude) # Dresden coordinates
+                except Exception as e:
+                    print(f"Error fetching weather: {e}")
+                    temperature = 0
+                    weather = "unknown"
 
             if counter % 10 == 0:
                 self.place_clock(hour, minute, temperature, weather)
