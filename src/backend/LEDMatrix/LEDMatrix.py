@@ -140,6 +140,8 @@ class LEDMatrix:
             if n_temp:        
                 if temp_1 != 0:
                     self.place_digit(temp_1, 0, 9)
+                else:
+                    self.place_digit("blank", 0, 9)
                 self.place_digit(temp_2, 4, 9)        
                 self.set_pixel(8, 9, color[0], color[1], color[2]) # colon
             else:
@@ -256,3 +258,4 @@ class LEDMatrix:
 #led_matrix = LEDMatrix(16, 16, brightness=0.2)
 
 #led_matrix.update_clock()
+
