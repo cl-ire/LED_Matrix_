@@ -103,7 +103,7 @@ class LEDMatrix:
             return n_digits[0], n_digits[1], n_positiv
     
     def place_digit(self, digit, x, y, color=[170,0,170]):
-        matrix = digits[digit]
+        matrix = digits[str(digit)]
         for i in range(5):
             for j in range(3):
                 val = matrix[i][j]
@@ -258,4 +258,5 @@ class LEDMatrix:
 #led_matrix = LEDMatrix(16, 16, brightness=0.2)
 
 #led_matrix.update_clock()
+
 
